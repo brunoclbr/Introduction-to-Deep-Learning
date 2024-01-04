@@ -22,6 +22,7 @@ targets = np.vstack(
 # visualize data
 plt.figure()
 plt.scatter(stacked_inputs[:,0], stacked_inputs[:,1], c=targets)
+plt.show()
 
 input_dim = 2
 output_dim = 1
@@ -65,3 +66,6 @@ x = np.linspace(-3, 6, 100)
 y = - W[0] /  W[1] * x + (0.5 - b) / W[1]
 plt.plot(x, y, "-r")
 plt.scatter(stacked_inputs[:, 0], stacked_inputs[:, 1], c=predictions[:, 0] > 0.5)
+plt.show()
+#plt.pause(1)
+#plt.close()
