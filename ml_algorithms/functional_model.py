@@ -1,5 +1,5 @@
 from tensorflow import keras 
-from tensorflow.keras import layers
+from keras import layers
 import numpy as np
 ''' 
 In this tutorial we create a simple ANN using the functional Keras API. As 
