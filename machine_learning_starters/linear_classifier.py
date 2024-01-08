@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 num_samples = 1000
 
-# inputs as 2D data!! mean has a value in x and y direction
+# inputs as 2D data --> mean has a value in x and y direction
 first_class = np.random.multivariate_normal(mean=[3, 0],
                                             cov=[[1, 0.5], [0.5, 1]], size=num_samples) #1000,2
 second_class = np.random.multivariate_normal(mean=[0, 3],
@@ -15,7 +15,8 @@ second_class = np.random.multivariate_normal(mean=[0, 3],
 
 stacked_inputs = np.vstack(((first_class,second_class))).astype(np.float32)#, 2000,2
 #print(stacked_inputs)
-# labels
+
+# labels: One cloud of data (1st class) equals 1 and the other 0
 targets = np.vstack(
     (np.zeros((num_samples,1),dtype="float32"),
      np.ones((num_samples,1),dtype="float32")) )
@@ -28,13 +29,13 @@ input_dim = 2
 output_dim = 1
 W = tf.Variable(initial_value=tf.random.uniform(shape=(input_dim, output_dim)))
 b = tf.Variable(initial_value=tf.zeros(shape=(output_dim,)))
-alpha = 0.1 #learning rate
+alpha = 0.1 # learning rate
 
-#forward pass
+# forward pass
 def model(inputs):
   return tf.matmul(inputs, W) + b
 
-#backward pass
+# backward pass
 def my_loss(x,y):
   square_loss = tf.square(x-y)
   return tf.reduce_mean(square_loss)
@@ -60,6 +61,8 @@ for epoch in range(30):
   loss = backward_pass(stacked_inputs)
   print(f'Loss at epoch {epoch}: {loss:.4f}')
 
+# Looking for predictions being either 0 or 1. Hence separate predicted values above or below 0.5
+# prediction = x*w1 + y*w2 + b > 0.5 for class 1 --> y > -w1/w2*x + (0.5-b)/w2 will be the separating line plot
 predictions = model(stacked_inputs)
 x = np.linspace(-3, 6, 100)
 y = - W[0] /  W[1] * x + (0.5 - b) / W[1]
